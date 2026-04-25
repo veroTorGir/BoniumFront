@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio | Bonium</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-dark:     #0b3d91;
+            --brand-mid:      #0066cc;
+            --brand-teal:     #00a884;
+            --brand-gradient: linear-gradient(135deg, #0b3d91 0%, #0066cc 40%, #00a884 100%);
+        }
+
+        /* ── Background ─────────────────────────── */
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 1.5rem 0;
+            background: var(--brand-gradient);
+            background-attachment: fixed;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.16;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            width: 420px; height: 420px;
+            background: #00e5b0;
+            top: -110px; right: -70px;
+        }
+
+        body::after {
+            width: 360px; height: 360px;
+            background: #1a5aff;
+            bottom: -90px; left: -55px;
+        }
+
+        /* ── Main card ───────────────────────────── */
+        .welcome-card {
+            width: min(94vw, 660px);
+            border-radius: 1.25rem;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 24px 64px rgba(11, 61, 145, 0.25),
+                        0 4px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Top bar ─────────────────────────────── */
+        .card-top-bar {
+            background: var(--brand-gradient);
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+        }
+
+        .btn-logout {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #fff;
+            font-size: 0.83rem;
+            padding: 0.3rem 0.85rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.27);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* ── Restaurant banner ─────────────────── */
+        .resto-banner {
+            position: relative;
+            background: linear-gradient(160deg, #071f4a 0%, #0b3d91 45%, #006655 100%);
+            height: 138px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .resto-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 140%, rgba(0,168,132,0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .banner-grid {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2.2rem;
+            position: relative;
+            z-index: 1;
+            padding: 0 1rem;
+        }
+
+        .banner-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            opacity: 0.88;
+            transition: opacity 0.2s, transform 0.2s;
+            cursor: default;
+        }
+
+        .banner-item.banner-btn {
+            cursor: pointer;
+        }
+
+        .banner-item:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        .banner-item.active .banner-label {
+            color: rgba(255,255,255,0.95);
+            border-bottom: 2px solid rgba(255,255,255,0.7);
+            padding-bottom: 1px;
+        }
+
+        .banner-item.active {
+            opacity: 1;
+        }
+
+        .banner-item svg {
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+        }
+
+        .banner-label {
+            color: rgba(255,255,255,0.65);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .banner-tagline {
+            position: absolute;
+            bottom: 8px;
+            right: 14px;
+            color: rgba(255,255,255,0.28);
+            font-size: 0.68rem;
+            font-style: italic;
+            letter-spacing: 0.04em;
+            pointer-events: none;
+        }
+
+        /* ── Colab decorative banner ─────────────── */
+        .banner-colab-deco {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2.4rem;
+            padding: 1rem 1rem 0.6rem;
+            pointer-events: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .banner-colab-deco svg {
+            opacity: 0.75;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.3));
+        }
+
+        /* ── Card body ───────────────────────────── */
+        .card-body-content {
+            padding: 1.25rem 1.25rem;
+        }
+
+        /* ── Role cards ──────────────────────────── */
+        .role-card {
+            border-radius: 0.75rem;
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            padding: 0.85rem 1rem;
+            text-align: left;
+            transition: box-shadow 0.2s;
+        }
+
+        .role-card:hover {
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+        }
+
+        .role-card-admin {
+            border-left: 4px solid #dc3545;
+            background: rgba(220, 53, 69, 0.04);
+        }
+
+        .role-card-colab {
+            border-left: 4px solid #0066cc;
+            background: rgba(0, 102, 204, 0.04);
+        }
+
+        .role-card-resto {
+            border-left: 4px solid #00a884;
+            background: rgba(0, 168, 132, 0.04);
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .role-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .role-icon-admin { background: rgba(220, 53, 69, 0.12);  color: #dc3545; }
+        .role-icon-colab { background: rgba(0, 102, 204, 0.12);  color: #0066cc; }
+        .role-icon-resto { background: rgba(0, 168, 132, 0.12);  color: #00a884; }
+
+        /* ── Misc ────────────────────────────────── */
+        .hidden { display: none; }
+
+        .menu-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .menu-item-card {
+            border: 1px solid rgba(0, 0, 0, 0.09);
+            border-radius: 0.65rem;
+            padding: 0.6rem 0.85rem;
+            background: rgba(255, 255, 255, 0.85);
+            transition: box-shadow 0.15s, transform 0.15s;
+        }
+
+        .menu-item-card:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+            transform: translateY(-1px);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--brand-mid);
+            box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.18);
+        }
+
+        .btn {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        /* ── Print ───────────────────────────────── */
+        @media print {
+            body { background: none !important; display: block; padding: 0; }
+            body::before, body::after { display: none; }
+            .welcome-card { width: 100% !important; box-shadow: none !important; border-radius: 0 !important; }
+            .card-top-bar, .resto-banner, .no-print { display: none !important; }
+            .hidden { display: none !important; }
+            .print-section { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+    <main class="welcome-card">
+
+        <div class="card-top-bar">
+            <div class="brand-badge">
+                <div class="brand-icon">B</div>
+                Bonium
+            </div>
+            <a id="logoutLink" href="index.html" class="btn-logout">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+            </a>
+        </div>
+
+        <!-- ── Restaurant Banner ────────────────── -->
+        <div class="resto-banner">
+            <div class="banner-grid">
+
+                <!-- Crear producto -->
+                <div class="banner-item banner-btn" id="bannerCreateProduct">
+                    <svg width="58" height="72" viewBox="0 0 58 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Box body -->
+                        <path d="M8 28 L8 60 Q8 63 11 63 L47 63 Q50 63 50 60 L50 28 Z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/>
+                        <!-- Box top flaps -->
+                        <path d="M8 28 L16 18 L42 18 L50 28" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/>
+                        <line x1="29" y1="18" x2="29" y2="28" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Center divider line -->
+                        <line x1="8" y1="28" x2="50" y2="28" stroke="white" stroke-width="2"/>
+                        <!-- Plus badge -->
+                        <circle cx="46" cy="13" r="10" fill="rgba(0,168,132,0.55)" stroke="white" stroke-width="1.8"/>
+                        <line x1="46" y1="8" x2="46" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="41" y1="13" x2="51" y2="13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="banner-label" id="bannerLabelCreate">Crear producto</span>
+                </div>
+
+                <!-- Historial -->
+                <div class="banner-item banner-btn" id="bannerHistory">
+                    <svg width="62" height="72" viewBox="0 0 62 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Document -->
+                        <path d="M10 8 L10 54 Q10 57 13 57 L49 57 Q52 57 52 54 L52 20 L40 8 Z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/>
+                        <!-- Folded corner -->
+                        <path d="M40 8 L40 20 L52 20" stroke="white" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                        <!-- Text lines -->
+                        <line x1="18" y1="30" x2="44" y2="30" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                        <line x1="18" y1="38" x2="44" y2="38" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                        <line x1="18" y1="46" x2="34" y2="46" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                        <!-- Printer base -->
+                        <rect x="14" y="60" width="34" height="10" rx="2" stroke="white" stroke-width="1.8" fill="none"/>
+                        <line x1="10" y1="57" x2="52" y2="57" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+                        <!-- Paper out -->
+                        <line x1="22" y1="70" x2="22" y2="65" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+                        <line x1="31" y1="70" x2="31" y2="65" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+                        <line x1="40" y1="70" x2="40" y2="65" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+                    </svg>
+                    <span class="banner-label" id="bannerLabelHistory">Historial</span>
+                </div>
+
+                <!-- Cuenta de cobro -->
+                <div class="banner-item banner-btn" id="bannerInvoice">
+                    <svg width="52" height="72" viewBox="0 0 52 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Receipt body -->
+                        <path d="M6 4 L6 62" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M46 4 L46 62" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="6" y1="4" x2="46" y2="4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Torn bottom edge -->
+                        <path d="M6 62 Q10 68 14 62 Q18 56 22 62 Q26 68 30 62 Q34 56 38 62 Q42 68 46 62" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <!-- Content lines -->
+                        <line x1="12" y1="14" x2="40" y2="14" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+                        <line x1="12" y1="22" x2="30" y2="22" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+                        <line x1="12" y1="30" x2="30" y2="30" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+                        <!-- Amount lines right-aligned -->
+                        <line x1="34" y1="22" x2="40" y2="22" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+                        <line x1="34" y1="30" x2="40" y2="30" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+                        <!-- Total separator -->
+                        <line x1="12" y1="38" x2="40" y2="38" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2" opacity="0.5"/>
+                        <!-- Total bold line -->
+                        <line x1="12" y1="46" x2="40" y2="46" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="banner-label" id="bannerLabelInvoice">Cuenta de cobro</span>
+                </div>
+
+            </div>
+            <span class="banner-tagline">Gestión gastronómica · Bonium</span>
+        </div>
+
+        <!-- Decoración colab (solo imágenes de restaurante) -->
+        <div class="banner-colab-deco hidden">
+            <!-- Plato con campana -->
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <ellipse cx="32" cy="46" rx="22" ry="5" fill="rgba(255,255,255,0.12)"/>
+                <path d="M10 42 Q10 24 32 24 Q54 24 54 42 Z" fill="rgba(255,255,255,0.18)" stroke="white" stroke-width="1.5"/>
+                <ellipse cx="32" cy="42" rx="22" ry="3" fill="none" stroke="white" stroke-width="1.5"/>
+                <line x1="20" y1="42" x2="44" y2="42" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M26 24 Q28 14 32 12 Q36 14 38 24" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1.4"/>
+                <circle cx="32" cy="12" r="3" fill="rgba(255,255,255,0.55)" stroke="white" stroke-width="1.2"/>
+            </svg>
+            <!-- Tenedor y cuchillo -->
+            <svg width="54" height="72" viewBox="0 0 54 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="16" y1="8" x2="16" y2="64" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="10" y1="8" x2="10" y2="28" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="22" y1="8" x2="22" y2="28" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M10 28 Q10 36 16 36 Q22 36 22 28" stroke="white" stroke-width="1.8" fill="none"/>
+                <line x1="38" y1="8" x2="38" y2="64" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M32 8 Q32 18 35 24 Q38 28 38 28" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            </svg>
+            <!-- Copa de vino -->
+            <svg width="52" height="72" viewBox="0 0 52 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 8 L8 30 Q8 46 26 46 Q44 46 44 30 L40 8 Z" stroke="white" stroke-width="1.8" fill="rgba(255,255,255,0.1)" stroke-linejoin="round"/>
+                <line x1="26" y1="46" x2="26" y2="62" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="16" y1="62" x2="36" y2="62" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 8 Q12 26 26 26 Q40 26 40 8" stroke="white" stroke-width="1" fill="rgba(255,255,255,0.08)" opacity="0.5"/>
+            </svg>
+            <!-- Café / taza -->
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M10 24 L10 46 Q10 50 14 50 L42 50 Q46 50 46 46 L46 24 Z" stroke="white" stroke-width="1.8" fill="rgba(255,255,255,0.1)" stroke-linejoin="round"/>
+                <path d="M46 28 Q54 28 54 35 Q54 42 46 42" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <ellipse cx="28" cy="52" rx="18" ry="3" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1.2"/>
+                <path d="M20 18 Q20 14 22 12" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                <path d="M28 16 Q28 12 30 10" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+        </div>
+
+        <div class="card-body-content text-center">
+            <p id="roleMessage" class="text-secondary mb-3 small">Verificando rol...</p>
+
+            <section id="cardAdmin" class="role-card role-card-admin hidden mb-3">
+                <div class="role-header">
+                    <div class="role-icon role-icon-admin"><i class="bi bi-shield-lock-fill"></i></div>
+                    <h2 class="h5 mb-0">Administrador</h2>
+                </div>
+                <div id="adminCreateUserView">
+                    <p class="mb-2 text-secondary small">Crear nuevos usuarios del sistema.</p>
+                    <form id="createUserForm" class="row g-2">
+                        <div class="col-12">
+                            <label for="newName" class="form-label small mb-0">Nombre</label>
+                            <input id="newName" type="text" class="form-control form-control-sm" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="newEmail" class="form-label small mb-0">Correo</label>
+                            <input id="newEmail" type="email" class="form-control form-control-sm" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="newPassword" class="form-label small mb-0">Clave</label>
+                            <input id="newPassword" type="password" class="form-control form-control-sm" minlength="4" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="newRole" class="form-label small mb-0">Rol</label>
+                            <select id="newRole" class="form-select form-select-sm" required>
+                                <option value="admin">admin</option>
+                                <option value="colab">colab</option>
+                                <option value="resto" selected>resto</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 d-grid mt-1">
+                            <button type="submit" class="btn btn-dark btn-sm">Crear usuario</button>
+                        </div>
+                    </form>
+                    <p id="createUserMessage" class="small mt-2 mb-0"></p>
+                </div>
+
+                <div id="adminHistoryView" class="hidden">
+                    <p class="mb-2 text-secondary small">Historial global de pedidos.</p>
+                    <div id="adminHistoryList" class="menu-grid"></div>
+                    <p id="adminHistoryMessage" class="small mt-2 mb-0 text-secondary"></p>
+                    <button id="printAdminHistoryBtn" type="button" class="btn btn-outline-secondary btn-sm mt-2 w-100 no-print">
+                        <i class="bi bi-printer"></i> Imprimir historial
+                    </button>
+                </div>
+
+                <div id="adminBonosView" class="hidden">
+                    <p class="mb-2 text-secondary small">Crear y registrar bonos.</p>
+                    <form id="createBonoForm" class="row g-2">
+                        <div class="col-12">
+                            <label for="bonoConcepto" class="form-label small mb-0">Concepto</label>
+                            <input id="bonoConcepto" type="text" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="bonoValor" class="form-label small mb-0">Valor</label>
+                            <input id="bonoValor" type="number" class="form-control form-control-sm" min="0" step="0.01" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="bonoDetalle" class="form-label small mb-0">Detalle</label>
+                            <textarea id="bonoDetalle" class="form-control form-control-sm" rows="2"></textarea>
+                        </div>
+                        <div class="col-12 d-grid mt-1">
+                            <button type="submit" class="btn btn-warning btn-sm">Crear bono</button>
+                        </div>
+                    </form>
+                    <p id="createBonoMessage" class="small mt-2 mb-2"></p>
+                    <div id="bonoList" class="menu-grid"></div>
+                </div>
+            </section>
+
+            <section id="cardColab" class="role-card role-card-colab hidden mb-3">
+                <div class="role-header">
+                    <div class="role-icon role-icon-colab"><i class="bi bi-people-fill"></i></div>
+                    <h2 class="h5 mb-0">Colaborador</h2>
+                </div>
+                <p class="mb-3 text-secondary small">Aqui puedes ver todos los platos y pedirlos con adicional opcional.</p>
+
+            <div id="platoList" class="menu-grid"></div>
+
+            <p id="createOrderMessage" class="small mt-2 mb-0"></p>
+        </section>
+
+            <section id="cardResto" class="role-card role-card-resto hidden mb-3">
+                <div class="role-header">
+                    <div class="role-icon role-icon-resto"><i class="bi bi-shop"></i></div>
+                    <h2 class="h5 mb-0">Restaurante</h2>
+                </div>
+
+                <!-- Vista: Órdenes pendientes (por defecto) -->
+                <div id="pendingView">
+                    <p class="mb-2 text-secondary small">Órdenes en espera de entrega.</p>
+                    <div id="pendingOrdersList" class="menu-grid"></div>
+                    <p id="pendingOrdersMessage" class="small mt-2 mb-0 text-secondary"></p>
+                </div>
+
+                <!-- Vista: Historial -->
+                <div id="historialView" class="hidden">
+                    <p class="mb-2 text-secondary small">Historial completo de órdenes.</p>
+                    <div id="historialList" class="menu-grid"></div>
+                    <p id="historialMessage" class="small mt-2 mb-0 text-secondary"></p>
+                    <button id="printHistorialBtn" type="button" class="btn btn-outline-secondary btn-sm mt-2 w-100 no-print">
+                        <i class="bi bi-printer"></i> Imprimir historial
+                    </button>
+                </div>
+
+                <!-- Vista: Cuenta de cobro -->
+                <div id="cuentaCobroView" class="hidden">
+                    <p class="mb-2 text-secondary small">Cuenta de cobro por órdenes entregadas.</p>
+                    <div id="cuentaCobroContent"></div>
+                    <button id="printCuentaBtn" type="button" class="btn btn-outline-success btn-sm mt-2 w-100 no-print">
+                        <i class="bi bi-printer"></i> Imprimir cuenta
+                    </button>
+                </div>
+
+                <!-- Vista: Crear producto -->
+                <div id="createProductView" class="hidden">
+                    <p class="mb-2 text-secondary small">Agregar nuevo plato o adicional al menú.</p>
+                    <form id="createProductForm" class="row g-2">
+                        <div class="col-12">
+                            <label for="productName" class="form-label small mb-0">Nombre</label>
+                            <input id="productName" type="text" class="form-control form-control-sm" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="productDescription" class="form-label small mb-0">Descripcion</label>
+                            <textarea id="productDescription" class="form-control form-control-sm" rows="2" required></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="productPrice" class="form-label small mb-0">Precio</label>
+                            <input id="productPrice" type="number" class="form-control form-control-sm" min="0" step="0.01" required>
+                        </div>
+
+                        <div class="col-12">
+                            <p class="form-label small mb-0">Tipo</p>
+                            <div class="form-check form-check-inline">
+                                <input id="isPlato" class="form-check-input" type="checkbox">
+                                <label class="form-check-label small" for="isPlato">Plato</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input id="isAdicion" class="form-check-input" type="checkbox">
+                                <label class="form-check-label small" for="isAdicion">Adicional</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 d-grid mt-1">
+                            <button type="submit" class="btn btn-success btn-sm">Crear item</button>
+                        </div>
+                    </form>
+                    <p id="createProductMessage" class="small mt-2 mb-0"></p>
+                </div>
+
+            </section>
+
+        </div><!-- /.card-body-content -->
+    </main>
+
+    <script>
+        const roleMessage = document.getElementById("roleMessage");
+        const logoutLink = document.getElementById("logoutLink");
+        const cardAdmin = document.getElementById("cardAdmin");
+        const cardColab = document.getElementById("cardColab");
+        const cardResto = document.getElementById("cardResto");
+        const createUserForm = document.getElementById("createUserForm");
+        const createUserMessage = document.getElementById("createUserMessage");
+        const createBonoForm = document.getElementById("createBonoForm");
+        const createBonoMessage = document.getElementById("createBonoMessage");
+        const createProductForm = document.getElementById("createProductForm");
+        const createProductMessage = document.getElementById("createProductMessage");
+        const createOrderMessage = document.getElementById("createOrderMessage");
+        const platoList = document.getElementById("platoList");
+        const pendingOrdersList = document.getElementById("pendingOrdersList");
+        const pendingOrdersMessage = document.getElementById("pendingOrdersMessage");
+        const isPlatoCheck = document.getElementById("isPlato");
+        const isAdicionCheck = document.getElementById("isAdicion");
+        // Admin views
+        const adminCreateUserView = document.getElementById("adminCreateUserView");
+        const adminHistoryView = document.getElementById("adminHistoryView");
+        const adminBonosView = document.getElementById("adminBonosView");
+        const adminHistoryList = document.getElementById("adminHistoryList");
+        const adminHistoryMessage = document.getElementById("adminHistoryMessage");
+        const bonoList = document.getElementById("bonoList");
+        // Resto views
+        const pendingView = document.getElementById("pendingView");
+        const historialView = document.getElementById("historialView");
+        const cuentaCobroView = document.getElementById("cuentaCobroView");
+        const createProductView = document.getElementById("createProductView");
+        const historialList = document.getElementById("historialList");
+        const historialMessage = document.getElementById("historialMessage");
+        const cuentaCobroContent = document.getElementById("cuentaCobroContent");
+        const printHistorialBtn = document.getElementById("printHistorialBtn");
+        const printCuentaBtn = document.getElementById("printCuentaBtn");
+        const printAdminHistoryBtn = document.getElementById("printAdminHistoryBtn");
+        // Banner buttons
+        const bannerCreateProduct = document.getElementById("bannerCreateProduct");
+        const bannerHistory = document.getElementById("bannerHistory");
+        const bannerInvoice = document.getElementById("bannerInvoice");
+        const bannerLabelCreate = document.getElementById("bannerLabelCreate");
+        const bannerLabelHistory = document.getElementById("bannerLabelHistory");
+        const bannerLabelInvoice = document.getElementById("bannerLabelInvoice");
+        const menuStorageKey = "boniumMenuItems";
+        const ordersStorageKey = "boniumOrders";
+        const bonosStorageKey = "boniumBonos";
+
+        async function getMenuItems() {
+            const cachedItems = JSON.parse(localStorage.getItem(menuStorageKey) || "[]");
+
+            if (Array.isArray(cachedItems) && cachedItems.length > 0) {
+                return cachedItems;
+            }
+
+            try {
+                const response = await fetch("productos.json", { cache: "no-store" });
+
+                if (!response.ok) {
+                    throw new Error("No se pudo cargar productos.json");
+                }
+
+                const fileItems = await response.json();
+                const normalizedItems = Array.isArray(fileItems)
+                    ? fileItems.filter((item) => item && (item.type === "plato" || item.type === "adicional"))
+                    : [];
+
+                localStorage.setItem(menuStorageKey, JSON.stringify(normalizedItems));
+                return normalizedItems;
+            } catch (error) {
+                console.error(error);
+                return [];
+            }
+        }
+
+        async function renderColabPlatos() {
+            const menuItems = await getMenuItems();
+            const platos = menuItems.filter((item) => item.type === "plato");
+            const adicionales = menuItems.filter((item) => item.type === "adicional");
+
+            platoList.innerHTML = "";
+
+            if (platos.length === 0) {
+                const empty = document.createElement("p");
+                empty.className = "mb-0 text-secondary";
+                empty.textContent = "No hay platos disponibles todavia.";
+                platoList.appendChild(empty);
+                return;
+            }
+
+            platos.forEach((plato, platoIndex) => {
+                const itemCard = document.createElement("article");
+                itemCard.className = "menu-item-card";
+
+                const title = document.createElement("h3");
+                title.className = "h6 mb-1";
+                title.textContent = plato.name;
+
+                const description = document.createElement("p");
+                description.className = "small text-secondary mb-1";
+                description.textContent = plato.description;
+
+                const price = document.createElement("p");
+                price.className = "mb-2";
+                price.textContent = `Precio: $${Number(plato.price).toFixed(2)}`;
+
+                const checkWrapper = document.createElement("div");
+                checkWrapper.className = "form-check mb-2";
+
+                const adicionalCheck = document.createElement("input");
+                adicionalCheck.className = "form-check-input";
+                adicionalCheck.type = "checkbox";
+                adicionalCheck.id = `wantsAdicional-${platoIndex}`;
+
+                const checkLabel = document.createElement("label");
+                checkLabel.className = "form-check-label";
+                checkLabel.htmlFor = adicionalCheck.id;
+                checkLabel.textContent = "Agregar adicional (opcional)";
+
+                checkWrapper.appendChild(adicionalCheck);
+                checkWrapper.appendChild(checkLabel);
+
+                const adicionalSelect = document.createElement("select");
+                adicionalSelect.className = "form-select mb-2";
+                adicionalSelect.disabled = true;
+
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Selecciona un adicional";
+                adicionalSelect.appendChild(defaultOption);
+
+                adicionales.forEach((adicional, adicionalIndex) => {
+                    const opt = document.createElement("option");
+                    opt.value = String(adicionalIndex);
+                    opt.textContent = `${adicional.name} - $${Number(adicional.price).toFixed(2)}`;
+                    adicionalSelect.appendChild(opt);
+                });
+
+                adicionalCheck.addEventListener("change", () => {
+                    adicionalSelect.disabled = !adicionalCheck.checked;
+                    if (!adicionalCheck.checked) {
+                        adicionalSelect.value = "";
+                    }
+                });
+
+                const orderButton = document.createElement("button");
+                orderButton.type = "button";
+                orderButton.className = "btn btn-primary w-100";
+                orderButton.textContent = "Pedir";
+
+                orderButton.addEventListener("click", () => {
+                    if (adicionalCheck.checked && !adicionalSelect.value) {
+                        createOrderMessage.textContent = "Marcaste adicional, selecciona uno.";
+                        createOrderMessage.className = "small mt-2 mb-0 text-danger";
+                        return;
+                    }
+
+                    const selectedAdicional = adicionalCheck.checked
+                        ? adicionales[Number(adicionalSelect.value)]
+                        : null;
+
+                    const total = Number(plato.price) + (selectedAdicional ? Number(selectedAdicional.price) : 0);
+
+                    const savedOrders = JSON.parse(localStorage.getItem(ordersStorageKey) || "[]");
+
+                    savedOrders.push({
+                        fromRole: "colab",
+                        toRole: "resto",
+                        createdBy: username,
+                        plato,
+                        adicional: selectedAdicional,
+                        total,
+                        status: "pendiente",
+                        createdAt: new Date().toISOString()
+                    });
+
+                    localStorage.setItem(ordersStorageKey, JSON.stringify(savedOrders));
+
+                    createOrderMessage.textContent = `Orden enviada a resto: ${plato.name}.`;
+                    createOrderMessage.className = "small mt-2 mb-0 text-success";
+                });
+
+                itemCard.appendChild(title);
+                itemCard.appendChild(description);
+                itemCard.appendChild(price);
+                itemCard.appendChild(checkWrapper);
+                itemCard.appendChild(adicionalSelect);
+                itemCard.appendChild(orderButton);
+                platoList.appendChild(itemCard);
+            });
+        }
+
+        function renderPendingOrders() {
+            const orders = JSON.parse(localStorage.getItem(ordersStorageKey) || "[]");
+            const pendingOrders = orders.filter(
+                (order) => order.toRole === "resto" && order.status === "pendiente"
+            );
+
+            pendingOrdersList.innerHTML = "";
+
+            if (pendingOrders.length === 0) {
+                pendingOrdersMessage.textContent = "No hay ordenes pendientes.";
+                return;
+            }
+
+            pendingOrdersMessage.textContent = "";
+
+            pendingOrders.forEach((order, index) => {
+                const card = document.createElement("article");
+                card.className = "menu-item-card";
+
+                const title = document.createElement("h4");
+                title.className = "h6 mb-1";
+                title.textContent = `Orden de ${order.createdBy}`;
+
+                const platoLine = document.createElement("p");
+                platoLine.className = "small mb-1";
+                platoLine.textContent = `Plato: ${order.plato?.name || "N/A"}`;
+
+                const adicionalLine = document.createElement("p");
+                adicionalLine.className = "small mb-1";
+                adicionalLine.textContent = `Adicional: ${order.adicional?.name || "Sin adicional"}`;
+
+                const totalLine = document.createElement("p");
+                totalLine.className = "small mb-2";
+                totalLine.textContent = `Total: $${Number(order.total || 0).toFixed(2)}`;
+
+                const deliverButton = document.createElement("button");
+                deliverButton.type = "button";
+                deliverButton.className = "btn btn-success btn-sm";
+                deliverButton.textContent = "Marcar entregado";
+
+                deliverButton.addEventListener("click", () => {
+                    const currentOrders = JSON.parse(localStorage.getItem(ordersStorageKey) || "[]");
+                    const pendingIndexes = [];
+
+                    currentOrders.forEach((item, itemIndex) => {
+                        if (item.toRole === "resto" && item.status === "pendiente") {
+                            pendingIndexes.push(itemIndex);
+                        }
+                    });
+
+                    const targetOrderIndex = pendingIndexes[index];
+
+                    if (targetOrderIndex === undefined) {
+                        return;
+                    }
+
+                    currentOrders[targetOrderIndex].status = "entregado";
+                    localStorage.setItem(ordersStorageKey, JSON.stringify(currentOrders));
+                    renderPendingOrders();
+                    renderOrderHistory();
+                    renderCuentaCobro();
+                    renderAdminOrderHistory();
+                });
+
+                card.appendChild(title);
+                card.appendChild(platoLine);
+                card.appendChild(adicionalLine);
+                card.appendChild(totalLine);
+                card.appendChild(deliverButton);
+                pendingOrdersList.appendChild(card);
+            });
+        }
+
+        function renderOrderHistory() {
+            const orders = JSON.parse(localStorage.getItem(ordersStorageKey) || "[]");
+            const filtered = orders.filter((o) => o.toRole === "resto");
+            historialList.innerHTML = "";
+
+            if (filtered.length === 0) {
+                historialMessage.textContent = "No hay órdenes registradas.";
+                return;
+            }
+
+            historialMessage.textContent = "";
+            filtered.forEach((order) => {
+                const card = document.createElement("article");
+                card.className = "menu-item-card";
+
+                const statusBadge = order.status === "pendiente"
+                    ? `<span class="badge bg-warning text-dark ms-1">Pendiente</span>`
+                    : `<span class="badge bg-success ms-1">Entregado</span>`;
+
+                card.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start">
+                        <p class="small fw-semibold mb-0">${order.createdBy}${statusBadge}</p>
+                        <span class="small text-secondary">${new Date(order.createdAt).toLocaleString("es-CO", {dateStyle:"short",timeStyle:"short"})}</span>
+                    </div>
+                    <p class="small mb-0 mt-1">${order.plato?.name || "N/A"}${order.adicional ? ` + ${order.adicional.name}` : ""}</p>
+                    <p class="small fw-bold mb-0">$${Number(order.total || 0).toFixed(2)}</p>
+                `;
+                historialList.appendChild(card);
+            });
+        }
+
+        function renderCuentaCobro() {
+            const orders = JSON.parse(localStorage.getItem(ordersStorageKey) || "[]");
+            const delivered = orders.filter((o) => o.toRole === "resto" && o.status === "entregado");
+            cuentaCobroContent.innerHTML = "";
+
+            if (delivered.length === 0) {
+                cuentaCobroContent.innerHTML = `<p class="small text-secondary mb-0">No hay órdenes entregadas aún.</p>`;
+                return;
+            }
+
+            const total = delivered.reduce((acc, o) => acc + Number(o.total || 0), 0);
+            const date = new Date().toLocaleDateString("es-CO", { dateStyle: "long" });
+
+            let rows = delivered.map((o) =>
+                `<tr>
+                    <td class="small">${o.createdBy}</td>
+                    <td class="small">${o.plato?.name || "N/A"}${o.adicional ? ` + ${o.adicional.name}` : ""}</td>
+                    <td class="small text-end">$${Number(o.total || 0).toFixed(2)}</td>
+                </tr>`
+            ).join("");
+
+            cuentaCobroContent.innerHTML = `
+                <div id="printCuentaSection">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-bold small">Bonium</span>
+                        <span class="small text-secondary">${date}</span>
+                    </div>
+                    <table class="table table-sm table-borderless mb-2">
+                        <thead><tr>
+                            <th class="small text-secondary">Cliente</th>
+                            <th class="small text-secondary">Ítem</th>
+                            <th class="small text-secondary text-end">Valor</th>
+                        </tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                    <hr class="my-1">
+                    <div class="d-flex justify-content-between">
+                        <span class="small fw-bold">Total</span>
+                        <span class="small fw-bold">$${total.toFixed(2)}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminOrderHistory() {
+            const orders = JSON.parse(localStorage.getItem(ordersStorageKey) || "[]");
+            adminHistoryList.innerHTML = "";
+
+            if (orders.length === 0) {
+                adminHistoryMessage.textContent = "No hay pedidos registrados.";
+                return;
+            }
+
+            adminHistoryMessage.textContent = "";
+            orders
+                .slice()
+                .reverse()
+                .forEach((order) => {
+                    const card = document.createElement("article");
+                    card.className = "menu-item-card";
+                    const statusBadge = order.status === "pendiente"
+                        ? `<span class="badge bg-warning text-dark ms-1">Pendiente</span>`
+                        : `<span class="badge bg-success ms-1">Entregado</span>`;
+
+                    card.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-start">
+                            <p class="small fw-semibold mb-0">${order.createdBy}${statusBadge}</p>
+                            <span class="small text-secondary">${new Date(order.createdAt).toLocaleString("es-CO", { dateStyle: "short", timeStyle: "short" })}</span>
+                        </div>
+                        <p class="small mb-0 mt-1">${order.plato?.name || "N/A"}${order.adicional ? ` + ${order.adicional.name}` : ""}</p>
+                        <p class="small text-secondary mb-0">Destino: ${order.toRole || "N/A"}</p>
+                    `;
+
+                    adminHistoryList.appendChild(card);
+                });
+        }
+
+        function renderBonos() {
+            const bonos = JSON.parse(localStorage.getItem(bonosStorageKey) || "[]");
+            bonoList.innerHTML = "";
+
+            if (bonos.length === 0) {
+                bonoList.innerHTML = '<p class="small text-secondary mb-0">No hay bonos creados.</p>';
+                return;
+            }
+
+            bonos
+                .slice()
+                .reverse()
+                .forEach((bono) => {
+                    const card = document.createElement("article");
+                    card.className = "menu-item-card";
+                    card.innerHTML = `
+                        <p class="small fw-semibold mb-1">${bono.concepto}</p>
+                        <p class="small mb-1">$${Number(bono.valor || 0).toFixed(2)}</p>
+                        <p class="small text-secondary mb-0">${bono.detalle || "Sin detalle"}</p>
+                    `;
+                    bonoList.appendChild(card);
+                });
+        }
+
+        // ── Banner view switching ─────────────────────────
+        const adminViews = [adminCreateUserView, adminHistoryView, adminBonosView];
+        const restoViews = [pendingView, historialView, cuentaCobroView, createProductView];
+        const bannerBtns = [bannerCreateProduct, bannerHistory, bannerInvoice];
+
+        function switchAdminView(showView, activeBannerBtn) {
+            adminViews.forEach((v) => { if (v) v.classList.add("hidden"); });
+            bannerBtns.forEach((b) => { if (b) b.classList.remove("active"); });
+            if (showView) showView.classList.remove("hidden");
+            if (activeBannerBtn) activeBannerBtn.classList.add("active");
+        }
+
+        function switchRestoView(showView, activeBannerBtn) {
+            restoViews.forEach((v) => { if (v) v.classList.add("hidden"); });
+            bannerBtns.forEach((b) => { if (b) b.classList.remove("active"); });
+            if (showView) showView.classList.remove("hidden");
+            if (activeBannerBtn) activeBannerBtn.classList.add("active");
+        }
+
+        function configureBannerByRole(currentRole) {
+            if (currentRole === "admin") {
+                if (bannerLabelCreate) bannerLabelCreate.textContent = "Crear usuario";
+                if (bannerLabelHistory) bannerLabelHistory.textContent = "Historial pedidos";
+                if (bannerLabelInvoice) bannerLabelInvoice.textContent = "Crear bonos";
+            } else if (currentRole === "resto") {
+                if (bannerLabelCreate) bannerLabelCreate.textContent = "Crear producto";
+                if (bannerLabelHistory) bannerLabelHistory.textContent = "Historial";
+                if (bannerLabelInvoice) bannerLabelInvoice.textContent = "Cuenta de cobro";
+            }
+        }
+
+        const bannerGrid = document.querySelector(".banner-grid");
+        const bannerColabDeco = document.querySelector(".banner-colab-deco");
+
+        const role = sessionStorage.getItem("authRole");
+        const username = sessionStorage.getItem("authUser");
+
+        if (!role || !username) {
+            window.location.href = "index.html";
+        } else {
+            roleMessage.textContent = `Hola ${username}. Tu rol es ${role}.`;
+            configureBannerByRole(role);
+
+            if (role === "admin") {
+                cardAdmin.classList.remove("hidden");
+                switchAdminView(adminCreateUserView, bannerCreateProduct);
+                renderAdminOrderHistory();
+                renderBonos();
+            } else if (role === "colab") {
+                // Mostrar decoración de restaurante; ocultar botones del banner
+                if (bannerGrid) bannerGrid.classList.add("hidden");
+                if (bannerColabDeco) bannerColabDeco.classList.remove("hidden");
+                cardColab.classList.remove("hidden");
+                renderColabPlatos();
+            } else {
+                cardResto.classList.remove("hidden");
+                switchRestoView(pendingView, null);
+                renderPendingOrders();
+                renderOrderHistory();
+                renderCuentaCobro();
+            }
+        }
+
+        bannerCreateProduct?.addEventListener("click", () => {
+            if (role === "admin") {
+                switchAdminView(adminCreateUserView, bannerCreateProduct);
+            } else if (role === "resto") {
+                switchRestoView(createProductView, bannerCreateProduct);
+            }
+        });
+
+        bannerHistory?.addEventListener("click", () => {
+            if (role === "admin") {
+                renderAdminOrderHistory();
+                switchAdminView(adminHistoryView, bannerHistory);
+            } else if (role === "resto") {
+                renderOrderHistory();
+                switchRestoView(historialView, bannerHistory);
+            }
+        });
+
+        bannerInvoice?.addEventListener("click", () => {
+            if (role === "admin") {
+                renderBonos();
+                switchAdminView(adminBonosView, bannerInvoice);
+            } else if (role === "resto") {
+                renderCuentaCobro();
+                switchRestoView(cuentaCobroView, bannerInvoice);
+            }
+        });
+
+        if (isPlatoCheck && isAdicionCheck) {
+            isPlatoCheck.addEventListener("change", () => {
+                if (isPlatoCheck.checked) {
+                    isAdicionCheck.checked = false;
+                }
+            });
+
+            isAdicionCheck.addEventListener("change", () => {
+                if (isAdicionCheck.checked) {
+                    isPlatoCheck.checked = false;
+                }
+            });
+        }
+
+        if (createUserForm) {
+            createUserForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                if (role !== "admin") {
+                    return;
+                }
+
+                const name = document.getElementById("newName").value.trim();
+                const email = document.getElementById("newEmail").value.trim().toLowerCase();
+                const password = document.getElementById("newPassword").value;
+                const newRole = document.getElementById("newRole").value;
+
+                const storageKey = "boniumUsers";
+                const savedUsers = JSON.parse(localStorage.getItem(storageKey) || "[]");
+                const alreadyExists = savedUsers.some((user) => user.email === email);
+
+                if (alreadyExists) {
+                    createUserMessage.textContent = "Ya existe un usuario con ese correo.";
+                    createUserMessage.className = "small mt-2 mb-0 text-danger";
+                    return;
+                }
+
+                savedUsers.push({
+                    name,
+                    email,
+                    password,
+                    role: newRole
+                });
+
+                localStorage.setItem(storageKey, JSON.stringify(savedUsers));
+
+                createUserForm.reset();
+                createUserMessage.textContent = "Usuario creado correctamente.";
+                createUserMessage.className = "small mt-2 mb-0 text-success";
+            });
+        }
+
+        if (createProductForm) {
+            createProductForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                if (role !== "resto") {
+                    return;
+                }
+
+                const name = document.getElementById("productName").value.trim();
+                const description = document.getElementById("productDescription").value.trim();
+                const priceValue = Number(document.getElementById("productPrice").value);
+                const isPlato = document.getElementById("isPlato").checked;
+                const isAdicion = document.getElementById("isAdicion").checked;
+
+                if (!isPlato && !isAdicion) {
+                    createProductMessage.textContent = "Debes marcar si es plato o adicional.";
+                    createProductMessage.className = "small mt-2 mb-0 text-danger";
+                    return;
+                }
+
+                if (isPlato && isAdicion) {
+                    createProductMessage.textContent = "Marca solo una opcion: plato o adicional.";
+                    createProductMessage.className = "small mt-2 mb-0 text-danger";
+                    return;
+                }
+
+                if (priceValue < 0 || Number.isNaN(priceValue)) {
+                    createProductMessage.textContent = "El precio debe ser valido.";
+                    createProductMessage.className = "small mt-2 mb-0 text-danger";
+                    return;
+                }
+
+                const savedItems = await getMenuItems();
+
+                savedItems.push({
+                    name,
+                    description,
+                    price: priceValue,
+                    type: isPlato ? "plato" : "adicional"
+                });
+
+                localStorage.setItem(menuStorageKey, JSON.stringify(savedItems));
+
+                createProductForm.reset();
+                createProductMessage.textContent = "Item creado correctamente.";
+                createProductMessage.className = "small mt-2 mb-0 text-success";
+            });
+        }
+
+        if (createBonoForm) {
+            createBonoForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                if (role !== "admin") {
+                    return;
+                }
+
+                const concepto = document.getElementById("bonoConcepto").value.trim();
+                const valor = Number(document.getElementById("bonoValor").value);
+                const detalle = document.getElementById("bonoDetalle").value.trim();
+
+                if (!concepto || Number.isNaN(valor) || valor < 0) {
+                    createBonoMessage.textContent = "Completa concepto y valor validos.";
+                    createBonoMessage.className = "small mt-2 mb-2 text-danger";
+                    return;
+                }
+
+                const bonos = JSON.parse(localStorage.getItem(bonosStorageKey) || "[]");
+                bonos.push({
+                    concepto,
+                    valor,
+                    detalle,
+                    createdAt: new Date().toISOString(),
+                    createdBy: username
+                });
+                localStorage.setItem(bonosStorageKey, JSON.stringify(bonos));
+
+                createBonoForm.reset();
+                createBonoMessage.textContent = "Bono creado correctamente.";
+                createBonoMessage.className = "small mt-2 mb-2 text-success";
+                renderBonos();
+            });
+        }
+
+        printHistorialBtn?.addEventListener("click", () => window.print());
+        printCuentaBtn?.addEventListener("click", () => window.print());
+        printAdminHistoryBtn?.addEventListener("click", () => window.print());
+
+        logoutLink.addEventListener("click", () => {
+            sessionStorage.removeItem("authUser");
+            sessionStorage.removeItem("authRole");
+        });
+    </script>
+</body>
+</html>

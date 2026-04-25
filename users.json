@@ -1,0 +1,17 @@
+[
+    {
+        "username": "admin",
+        "password": "admin1234",
+        "role": "admin"
+    },
+     {
+        "username": "colab",
+        "password": "colab1234",
+        "role": "colab"
+    },
+     {
+        "username": "resto",
+        "password": "resto1234",
+        "role": "resto"
+    }
+]

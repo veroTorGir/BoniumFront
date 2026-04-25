@@ -1,0 +1,116 @@
+:root {
+    --brand-dark:     #0b3d91;
+    --brand-mid:      #0066cc;
+    --brand-teal:     #00a884;
+    --brand-gradient: linear-gradient(135deg, #0b3d91 0%, #0066cc 40%, #00a884 100%);
+}
+
+/* ── Background ─────────────────────────────── */
+body {
+    min-height: 100vh;
+    background: var(--brand-gradient);
+    background-attachment: fixed;
+}
+
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::before {
+    width: 420px;
+    height: 420px;
+    background: #00e5b0;
+    top: -110px;
+    right: -70px;
+}
+
+body::after {
+    width: 360px;
+    height: 360px;
+    background: #1a5aff;
+    bottom: -90px;
+    left: -55px;
+}
+
+/* ── Login card ──────────────────────────────── */
+#login .card {
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 24px 64px rgba(11, 61, 145, 0.28),
+                0 4px 20px rgba(0, 0, 0, 0.07) !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Inputs ──────────────────────────────────── */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--brand-mid);
+    box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.18);
+}
+
+.input-group-text {
+    border-right: none;
+    background: #fff;
+    color: #6c757d;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+.input-group .form-control:focus {
+    border-color: var(--brand-mid);
+    box-shadow: none;
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: var(--brand-mid);
+}
+
+/* ── Brand gradient button ───────────────────── */
+.btn-brand {
+    background: var(--brand-gradient);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+    opacity: 0.9;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 102, 204, 0.35);
+}
+
+.btn-brand:active {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ── Generic button polish ───────────────────── */
+.btn {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:not(.btn-brand):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.btn:not(.btn-brand):active {
+    transform: translateY(0);
+    box-shadow: none;
+}

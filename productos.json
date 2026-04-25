@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Hamburguesa Clasica",
+        "description": "Pan brioche, carne 150g, lechuga, tomate y salsa de la casa.",
+        "price": 18.5,
+        "type": "plato"
+    },
+    {
+        "name": "Pasta Alfredo",
+        "description": "Fettuccine en salsa cremosa con queso parmesano.",
+        "price": 22,
+        "type": "plato"
+    },
+    {
+        "name": "Ensalada Mediterranea",
+        "description": "Mix de hojas verdes, aceitunas, queso feta y vinagreta.",
+        "price": 16,
+        "type": "plato"
+    },
+    {
+        "name": "Papas Fritas",
+        "description": "Porcion mediana de papas fritas crujientes.",
+        "price": 7,
+        "type": "adicional"
+    },
+    {
+        "name": "Queso Extra",
+        "description": "Porcion de queso mozzarella adicional.",
+        "price": 3.5,
+        "type": "adicional"
+    },
+    {
+        "name": "Bebida Lata",
+        "description": "Gaseosa personal de 350ml.",
+        "price": 4.5,
+        "type": "adicional"
+    }
+]

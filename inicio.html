@@ -646,6 +646,7 @@
         const menuStorageKey = "boniumMenuItems";
         const ordersStorageKey = "boniumOrders";
         const bonosStorageKey = "boniumBonos";
+        const API_BASE = "http://localhost:8080";
 
         async function getMenuItems() {
             const cachedItems = JSON.parse(localStorage.getItem(menuStorageKey) || "[]");
@@ -655,10 +656,10 @@
             }
 
             try {
-                const response = await fetch("productos.json", { cache: "no-store" });
+                const response = await fetch(`${API_BASE}/products`);
 
                 if (!response.ok) {
-                    throw new Error("No se pudo cargar productos.json");
+                    throw new Error("No se pudo cargar los productos del servidor");
                 }
 
                 const fileItems = await response.json();

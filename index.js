@@ -3,6 +3,8 @@ const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 const loginMessage = document.getElementById("loginMessage");
 
+const API_BASE = "http://localhost:8080";
+
 function showMessage(text, isSuccess) {
 	loginMessage.textContent = text;
 	loginMessage.classList.toggle("text-success", isSuccess);
@@ -16,20 +18,16 @@ loginForm.addEventListener("submit", async (event) => {
 	const password = passwordInput.value;
 
 	try {
-		const response = await fetch("users.json", { cache: "no-store" });
+		const response = await fetch(`${API_BASE}/auth/login`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ username, password }),
+		});
 
-		if (!response.ok) {
-			throw new Error("No se pudo cargar users.json");
-		}
-
-		const users = await response.json();
-		const matchedUser = users.find(
-			(user) => user.username === username && user.password === password
-		);
-
-		if (matchedUser) {
-			sessionStorage.setItem("authUser", matchedUser.username);
-			sessionStorage.setItem("authRole", matchedUser.role || "resto");
+		if (response.ok) {
+			const user = await response.json();
+			sessionStorage.setItem("authUser", user.username);
+			sessionStorage.setItem("authRole", user.role || "resto");
 
 			showMessage("Login exitoso. Bienvenido.", true);
 			setTimeout(() => {
@@ -40,7 +38,8 @@ loginForm.addEventListener("submit", async (event) => {
 
 		showMessage("Usuario o password incorrectos.", false);
 	} catch (error) {
-		showMessage("Error al validar usuario. Revisa users.json.", false);
+		showMessage("Error al conectar con el servidor.", false);
 		console.error(error);
 	}
 });
+
